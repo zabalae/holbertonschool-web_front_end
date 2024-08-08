@@ -9,6 +9,18 @@
   ],
   "creatorBuild" : "34576",
   "files" : {
+    "\/0-debug_log.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/0-debug_log-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
     "\/0-debug_log.scss" : {
       "aP" : 0,
       "bl" : 0,
@@ -19,6 +31,21 @@
       "ma" : 0,
       "oA" : 0,
       "oAP" : "\/0-debug_log.css",
+      "oF" : 0,
+      "oS" : 0,
+      "pg" : 0,
+      "sct" : 0
+    },
+    "\/1-color_variable.scss" : {
+      "aP" : 0,
+      "bl" : 0,
+      "co" : 0,
+      "dP" : 10,
+      "ec" : 1,
+      "ft" : 4,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/1-color_variable.css",
       "oF" : 0,
       "oS" : 0,
       "pg" : 0,

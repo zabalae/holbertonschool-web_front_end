@@ -144,6 +144,18 @@
       "pg" : 0,
       "sct" : 0
     },
+    "\/5-nested_child.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/5-nested_child-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
     "\/5-nested_child.scss" : {
       "aP" : 0,
       "bl" : 0,
@@ -154,6 +166,21 @@
       "ma" : 0,
       "oA" : 0,
       "oAP" : "\/5-nested_child.css",
+      "oF" : 0,
+      "oS" : 0,
+      "pg" : 0,
+      "sct" : 0
+    },
+    "\/6-nested_hover.scss" : {
+      "aP" : 0,
+      "bl" : 0,
+      "co" : 0,
+      "dP" : 10,
+      "ec" : 1,
+      "ft" : 4,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/6-nested_hover.css",
       "oF" : 0,
       "oS" : 0,
       "pg" : 0,

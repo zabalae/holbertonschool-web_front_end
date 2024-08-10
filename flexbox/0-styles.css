@@ -320,6 +320,12 @@ template {
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+
+  .row {
+    content: '';
+    display: table;
+    clear: both;
     display: flex;
   }
   

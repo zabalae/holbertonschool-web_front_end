@@ -701,8 +701,9 @@ template {
       
     /* Post
       ============================= */
+
       .post {
-        display:flex;
+        display: flex;
       }
   
       .post-content {

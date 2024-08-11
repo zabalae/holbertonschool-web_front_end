@@ -385,10 +385,10 @@ template {
   /* Header
       ============================= */
 
-  .header-container {
-    display: flex;
-    justify-content: space-between;
-  }
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+      }
   
   .header {
     padding: var(--header-padding);

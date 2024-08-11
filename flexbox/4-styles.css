@@ -338,7 +338,7 @@ template {
   }
   
   .col-1-2 {
-    width: 5calc((100% / 2) - 2rem);
+    width: calc((100% / 2) - 2rem);
   }
   
   /* Navbar

@@ -189,11 +189,6 @@
     white-space: nowrap;
   }
 
-  .off-screen {
-    left: -100vw;
-    position: absolute;
-  }
-
   .skip-link {
     background: var(--color-black);
     color: var(--color-white);
@@ -210,6 +205,11 @@
   skip-link:focus {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  .off-screen {
+    left: -100vw;
+    position: absolute;
   }
   
   /*** 2. LAYOUT ***/

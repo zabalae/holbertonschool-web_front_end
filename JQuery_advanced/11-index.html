@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Task 11</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <script>
+        let posts = [];
+
+
+    function addPostRow(data) {
+        const paragraph = document.createElement('p');
+        paragraph.innerHTML = `<span>Post created with id ${data.id}, title: ${data.title}, author: ${data.author}</span>`;
+        document.body.appendChild(paragraph);
+    }
+
+    function clearPosts() {
+        const paragraphs = document.querySelectorAll('p');
+        paragraphs.forEach(paragraph => paragraph.remove());
+    }
+
+
+    function listPosts() {
+        fetch('http://localhost:3000/posts')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Server Error');
+                }
+                return response.json();
+            })
+            .then(data => {
+                posts = data;
+                clearPosts();
+                posts.reverse();
+                posts.forEach(function(post) {
+                    addPostRow(post);
+                });
+            })
+            .catch(error => {
+                alert('Server Error');
+                console.error('Error:', error);
+            });
+    }
+
+    function buildForm() {
+        const form = document.createElement('form');
+        form.id = 'postForm';
+
+        const authorDiv = document.createElement('div');
+        const authorLabel = document.createElement('label');
+        authorLabel.setAttribute('for', 'author');
+        authorLabel.innerText = 'Author';
+        const authorInput = document.createElement('input');
+        authorInput.type = 'text';
+        authorInput.id = 'author';
+        authorDiv.appendChild(authorLabel);
+        authorDiv.appendChild(authorInput);
+
+        const titleDiv = document.createElement('div');
+        const titleLabel = document.createElement('label');
+        titleLabel.setAttribute('for', 'title');
+        titleLabel.innerText = 'Title';
+        const titleInput = document.createElement('textarea');
+        titleInput.id = 'title';
+        titleDiv.appendChild(titleLabel);
+        titleDiv.appendChild(titleInput);
+
+        const submitInput = document.createElement('input');
+        submitInput.type = 'submit';
+        submitInput.value = 'Submit';
+
+        form.appendChild(authorDiv);
+        form.appendChild(titleDiv);
+        form.appendChild(submitInput);
+
+        document.body.appendChild(form);
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            sendForm();
+        });
+
+        authorLabel.addEventListener('click', function () {
+            authorInput.focus();
+        });
+        titleLabel.addEventListener('click', function () {
+            titleInput.focus();
+        });
+    }
+
+    function sendForm() {
+        $('form').after('<p>About to send the query to the API</p>');
+
+        const highestId = posts.length > 0 ? Math.max(...posts.map(post => post.id)) : 0;
+        const newId = highestId + 1;
+
+        const data = {
+            id: newId,
+            author: $('#author').val(),
+            title: $('#title').val()
+        };
+
+        fetch('http://localhost:3000/posts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error sending the POST query');
+                }
+                return response.json();
+            })
+            .then(post => {
+                posts.unshift(post);
+                clearPosts();
+                listPosts();
+            })
+            .catch(error => {
+                alert('Error sending the POST query');
+                console.error('Error:', error);
+            });
+    }
+
+    window.onload = function () {
+        listPosts();
+        buildForm();
+    };
+</script>
+</body>
+</html>

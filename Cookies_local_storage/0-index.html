@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login to the website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        input {
+            margin: 10px;
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        #cookies-section {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Login to the website</h1>
+    <input type="text" id="firstname" placeholder="Firstname">
+    <input type="email" id="email" placeholder="Email">
+    <button onclick="setCookies()">Log me in</button>
+
+    <h2>Cookies</h2>
+    <button onclick="showCookies()">Show the cookies</button>
+
+    <div id="cookies-section"></div>
+
+    <script>
+        function setCookies() {
+            const firstname = document.getElementById('firstname').value;
+            const email = document.getElementById('email').value;
+            document.cookie = `firstname=${firstname}; path=/;`;
+            document.cookie = `email=${email}; path=/;`;
+            alert('Cookies set!');
+        }
+
+        function showCookies() {
+            const cookiesSection = document.getElementById('cookies-section');
+            cookiesSection.innerHTML = ''; // Clear the section before appending
+
+            const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+            cookies.forEach(cookie => {
+                const p = document.createElement('p');
+                p.innerHTML = `Cookies: ${cookie}`;
+                cookiesSection.appendChild(p);
+            });
+        }
+    </script>
+</body>
+</html>

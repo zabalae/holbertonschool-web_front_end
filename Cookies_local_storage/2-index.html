@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login to the website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        input {
+            margin: 10px;
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        #cookies-section {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Login to the website</h1>
+    <input type="text" id="firstname" placeholder="Firstname">
+    <input type="email" id="email" placeholder="Email">
+    <button onclick="setCookies()">Log me in</button>
+
+    <h2>Cookies</h2>
+    <button onclick="showCookies()">Show the cookies</button>
+
+    <div id="cookies-section"></div>
+
+    <script>
+        // Helper function to calculate the expiration date
+        function getExpirationDate(days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            return date.toUTCString();
+        }
+
+        // Function to set cookies with a 10-day expiration
+        function setCookies() {
+            const firstname = document.getElementById('firstname').value;
+            const email = document.getElementById('email').value;
+            const expires = getExpirationDate(10);
+            
+            // Set cookies with expiration date
+            document.cookie = `firstname=${firstname}; expires=${expires}; path=/;`;
+            document.cookie = `email=${email}; expires=${expires}; path=/;`;
+            alert('Cookies set with a 10-day expiration!');
+        }
+
+        // Function to get the value of a specific cookie by name
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                let cookie = cookies[i].trim();
+                if (cookie.indexOf(nameEQ) === 0) {
+                    return cookie.substring(nameEQ.length, cookie.length);
+                }
+            }
+            return ""; // Return an empty string if the cookie is not found
+        }
+
+        // Function to show the cookies in a formatted way
+        function showCookies() {
+            const firstname = getCookie('firstname');
+            const email = getCookie('email');
+            
+            const cookiesSection = document.getElementById('cookies-section');
+            cookiesSection.innerHTML = ''; // Clear the section before appending
+            
+            const p = document.createElement('p');
+            p.innerHTML = `Email: ${email || 'N/A'} - Firstname: ${firstname || 'N/A'}`;
+            cookiesSection.appendChild(p);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Shopping Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+
+        h1, h2 {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            cursor: pointer;
+            margin: 10px 0;
+            font-size: 1.2rem;
+        }
+
+        p {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .cart-item {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="store"></div>
+    <div id="cart-container"></div>
+
+    <script>
+        // Array of available items
+        const availableItems = ['Shampoo', 'Soap', 'Sponge', 'Water'];
+
+        // Check if session storage is available
+        if (typeof(Storage) === "undefined") {
+            alert("Sorry, your browser does not support Web storage. Try again with a better one");
+        } else {
+            createStore(); // Initialize the store
+            displayCart(); // Display the cart
+        }
+
+        // Function to get the cart from session storage
+        function getCartFromStorage() {
+            const cart = sessionStorage.getItem('cart');
+            return cart ? JSON.parse(cart) : {}; // Parse the cart JSON or return an empty object
+        }
+
+        // Function to add an item to the cart
+        function addItemToCart(item) {
+            let cart = getCartFromStorage();
+            if (cart[item]) {
+                cart[item] += 1; // Increase quantity if item exists
+            } else {
+                cart[item] = 1; // Add item if it doesn't exist
+            }
+            sessionStorage.setItem('cart', JSON.stringify(cart)); // Store updated cart in session storage
+            displayCart(); // Update the cart display
+        }
+
+        // Function to remove an item from the cart
+        function removeItemFromCart(item) {
+            let cart = getCartFromStorage();
+            if (cart[item]) {
+                delete cart[item]; // Remove the item from the cart
+            }
+            sessionStorage.setItem('cart', JSON.stringify(cart)); // Store updated cart in session storage
+            displayCart(); // Update the cart display
+        }
+
+        // Function to clear the entire cart
+        function clearCart() {
+            sessionStorage.removeItem('cart'); // Clear the cart from session storage
+            displayCart(); // Update the cart display
+        }
+
+        // Function to create the store UI
+        function createStore() {
+            const storeDiv = document.getElementById('store');
+            const h2 = document.createElement('h2');
+            h2.textContent = 'Available products:';
+            storeDiv.appendChild(h2);
+
+            const ul = document.createElement('ul'); // Create a UL element for the store
+            availableItems.forEach(item => {
+                const li = document.createElement('li'); // Create an LI for each available item
+                li.textContent = item;
+                li.onclick = () => addItemToCart(item); // Add click event to add item to cart
+                ul.appendChild(li); // Append LI to UL
+            });
+
+            storeDiv.appendChild(ul); // Append the UL to the store div
+        }
+
+        // Function to display the cart
+        function displayCart() {
+            const cartContainer = document.getElementById('cart-container');
+            cartContainer.innerHTML = ''; // Clear the cart container
+
+            const cart = getCartFromStorage();
+
+            const h2 = document.createElement('h2');
+            h2.textContent = 'Your cart:';
+            cartContainer.appendChild(h2);
+
+            const div = document.createElement('div'); // Create a container for the cart items
+            div.id = 'cart';
+
+            // Check if the cart is empty
+            const items = Object.keys(cart);
+            if (items.length === 0) {
+                const emptyCartMessage = document.createElement('p');
+                emptyCartMessage.textContent = 'Your cart is empty';
+                div.appendChild(emptyCartMessage);
+            } else {
+                const ul = document.createElement('ul'); // Create a UL for the cart items
+
+                // Add "Clear my cart" option only if there are items in the cart
+                const clearCartItem = document.createElement('li');
+                clearCartItem.textContent = 'Clear my cart';
+                clearCartItem.onclick = clearCart;
+                ul.appendChild(clearCartItem);
+
+                items.forEach(item => {
+                    const li = document.createElement('li'); // Create an LI for each cart item
+                    li.classList.add('cart-item');
+                    li.innerHTML = `${item} x ${cart[item]} <span style="cursor:pointer;" onclick="removeItemFromCart('${item}')">(remove)</span>`;
+                    ul.appendChild(li); // Append the LI to the UL
+                });
+
+                div.appendChild(ul); // Append the UL to the cart container
+            }
+
+            cartContainer.appendChild(div); // Append the cart container to the body
+        }
+    </script>
+</body>
+</html>

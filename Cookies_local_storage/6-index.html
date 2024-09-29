@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart with Session Storage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            cursor: pointer;
+            margin: 10px 0;
+            font-size: 1.2rem;
+        }
+
+        p {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Shopping Cart</h1>
+
+    <div id="store"></div>
+    <div id="cart-info"></div>
+
+    <script>
+        // Array of available items
+        const availableItems = ['Shampoo', 'Soap', 'Sponge', 'Water'];
+
+        // Check if session storage is available
+        if (typeof(Storage) === "undefined") {
+            alert("Sorry, your browser does not support Web storage. Try again with a better one");
+        } else {
+            // If sessionStorage is available, initialize the store and display the cart
+            createStore();
+            displayCart();
+        }
+
+        // Function to add an item to the cart
+        function addItemToCart(item) {
+            sessionStorage.setItem(item, true); // Set the item in sessionStorage
+            displayCart(); // Update the cart display
+        }
+
+        // Function to create and display the store
+        function createStore() {
+            const storeDiv = document.getElementById('store');
+            const ul = document.createElement('ul'); // Create a UL element
+
+            availableItems.forEach(item => {
+                const li = document.createElement('li'); // Create an LI element
+                li.textContent = item; // Set the text content to the item's name
+                li.onclick = () => addItemToCart(item); // Add click event to add item to cart
+                ul.appendChild(li); // Append the LI to the UL
+            });
+
+            storeDiv.appendChild(ul); // Append the UL to the store div
+        }
+
+        // Function to display the cart
+        function displayCart() {
+            const cartInfoDiv = document.getElementById('cart-info');
+            cartInfoDiv.innerHTML = ''; // Clear previous content
+
+            const itemsInCart = Object.keys(sessionStorage); // Get all keys (items) from sessionStorage
+
+            if (itemsInCart.length > 0) {
+                const p = document.createElement('p');
+                p.textContent = `You previously had ${itemsInCart.length} items in your cart`;
+                cartInfoDiv.appendChild(p); // Append the message to the cart info div
+            }
+        }
+    </script>
+</body>
+</html>
